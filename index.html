@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>50 Startups | AIoT Parsimony & Multiple Linear Regression Explorer</title>
+  <title>AIoT Multi-Problem Linear Regression & Feature Selection Explorer</title>
   
   <!-- Modern Typography: Plus Jakarta Sans, Outfit, & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -16,7 +16,7 @@
   <!-- Chart.js 4 CDN -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   
-  <!-- Precomputed Model Benchmark Data -->
+  <!-- Multi-Dataset Benchmark Store -->
   <script src="model_data.js"></script>
 
   <style>
@@ -74,7 +74,7 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Floating Navbar */
+    /* Floating Navbar with Problem Switcher */
     .nav-bar {
       position: sticky;
       top: 16px;
@@ -85,16 +85,18 @@
     }
 
     .nav-inner {
-      background: rgba(14, 19, 31, 0.85);
+      background: rgba(14, 19, 31, 0.88);
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--border-subtle);
       border-radius: var(--radius-xl);
-      padding: 12px 24px;
+      padding: 10px 22px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+      flex-wrap: wrap;
+      gap: 14px;
     }
 
     .brand-logo {
@@ -135,10 +137,52 @@
       font-weight: 600;
     }
 
+    /* Problem Switcher Pod */
+    .problem-switcher-wrap {
+      display: flex;
+      align-items: center;
+      background: rgba(7, 9, 14, 0.85);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 9999px;
+      padding: 4px;
+      gap: 4px;
+    }
+
+    .switcher-btn {
+      padding: 7px 16px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      border-radius: 9999px;
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .switcher-btn:hover {
+      color: white;
+    }
+
+    .switcher-btn.active {
+      background: linear-gradient(135deg, var(--neon-cyan), #0284c7);
+      color: #07090e;
+      box-shadow: 0 0 16px var(--neon-cyan-glow);
+    }
+
+    .switcher-btn.active.boston-active {
+      background: linear-gradient(135deg, var(--neon-emerald), #059669);
+      color: #07090e;
+      box-shadow: 0 0 16px var(--neon-emerald-glow);
+    }
+
     .nav-links {
       display: flex;
       align-items: center;
-      gap: 20px;
+      gap: 18px;
     }
 
     .nav-item {
@@ -201,6 +245,7 @@
       box-shadow: var(--shadow-glass);
       position: relative;
       overflow: hidden;
+      transition: all 0.3s;
     }
 
     .hero-cockpit::before {
@@ -243,10 +288,10 @@
 
     .hero-cockpit h2 {
       font-family: 'Outfit', sans-serif;
-      font-size: 34px;
+      font-size: 32px;
       font-weight: 800;
       letter-spacing: -0.02em;
-      line-height: 1.2;
+      line-height: 1.25;
       margin-bottom: 14px;
       background: linear-gradient(135deg, #ffffff 30%, #94a3b8 100%);
       -webkit-background-clip: text;
@@ -256,7 +301,7 @@
     .hero-cockpit p {
       font-size: 15px;
       color: #cbd5e1;
-      max-width: 860px;
+      max-width: 880px;
       line-height: 1.65;
       margin-bottom: 24px;
     }
@@ -303,7 +348,7 @@
 
     .stat-box-text .val {
       font-family: 'Outfit', sans-serif;
-      font-size: 18px;
+      font-size: 17px;
       font-weight: 700;
       color: white;
     }
@@ -723,7 +768,7 @@
       background: rgba(255, 255, 255, 0.03);
     }
 
-    /* Financial Simulator Cockpit */
+    /* Financial / Real Estate Simulator Cockpit */
     .simulator-body {
       display: flex;
       flex-direction: column;
@@ -905,7 +950,7 @@
 </head>
 <body>
 
-  <!-- Floating Nav Header -->
+  <!-- Floating Nav Header with Dataset / Problem Switcher -->
   <nav class="nav-bar">
     <div class="nav-inner">
       <a href="#" class="brand-logo">
@@ -913,15 +958,25 @@
           <i class="fa-solid fa-atom"></i>
         </div>
         <div class="brand-text">
-          <h1>50 Startups Parsimony Engine</h1>
-          <p>AIoT Data Analytics // DIC-2</p>
+          <h1 id="navBrandTitle">AIoT Machine Learning Engine</h1>
+          <p id="navBrandSubtitle">DIC-2 MULTI-DATASET LAB</p>
         </div>
       </a>
+
+      <!-- Problem Switcher Toggle Buttons -->
+      <div class="problem-switcher-wrap" id="problemSwitcher">
+        <button class="switcher-btn active" data-dataset="startups">
+          <i class="fa-solid fa-briefcase"></i> 50 Startups (獲利預測)
+        </button>
+        <button class="switcher-btn" data-dataset="boston">
+          <i class="fa-solid fa-house-chimney"></i> Boston Housing (房價預測)
+        </button>
+      </div>
 
       <div class="nav-links">
         <a href="#parsimony-curves" class="nav-item"><i class="fa-solid fa-chart-line"></i> 曲線分析</a>
         <a href="#stats-model" class="nav-item"><i class="fa-solid fa-table"></i> 統計報表</a>
-        <a href="#profit-cockpit" class="nav-item"><i class="fa-solid fa-sliders"></i> 獲利模擬</a>
+        <a href="#profit-cockpit" class="nav-item"><i class="fa-solid fa-sliders"></i> 即時預測</a>
         <a href="#project-conclusions-section" class="nav-item"><i class="fa-solid fa-graduation-cap"></i> 專案結論</a>
         <div class="live-indicator">
           <span class="live-dot"></span>
@@ -935,45 +990,45 @@
 
     <!-- Hero Cockpit -->
     <header class="hero-cockpit">
-      <div class="hero-eyebrow">
+      <div class="hero-eyebrow" id="heroEyebrow">
         <i class="fa-solid fa-microchip"></i>
         MACHINE LEARNING FEATURE SELECTION & STATISTICAL PARSIMONY
       </div>
-      <h2>多元線性迴歸最佳特徵選擇與奧卡姆剃刀驗證</h2>
-      <p>
-        深入探索 5 種機器學習特徵選擇演算法（Lasso L1 正則化、Forward SFS 循序向前選擇、RFE 遞迴特徵消除、ElasticNet 彈性網、Exhaustive Search 最佳子集搜尋）在不同變數維度 $k=1 \dots 5$ 下的<strong>偏差-變異權衡 (Bias-Variance Tradeoff)</strong>。實證展示 <strong>$k=2$ 全局最佳甜蜜點 (Min Test RMSE: $8,198.80)</strong> 與強行納入雜訊變數後的 <strong>$k=5$ 過擬合峭壁 (Overfitting Cliff)</strong>。
+      <h2 id="heroTitle">多元線性迴歸最佳特徵選擇與奧卡姆剃刀驗證 (50 Startups)</h2>
+      <p id="heroDesc">
+        深入探索 5 種機器學習特徵選擇演算法在不同變數維度 $k=1 \dots 5$ 下的<strong>偏差-變異權衡 (Bias-Variance Tradeoff)</strong>。實證展示全局最佳甜蜜點與過擬合峭壁。
       </p>
 
       <div class="hero-stat-row">
         <div class="hero-stat-box">
           <div class="stat-box-icon icon-emerald"><i class="fa-solid fa-star"></i></div>
           <div class="stat-box-text">
-            <div class="val">k = 2 (Sweet Spot)</div>
-            <div class="desc">R&D + Marketing 最佳特徵組合</div>
+            <div class="val" id="heroStat1Val">k = 2 (Sweet Spot)</div>
+            <div class="desc" id="heroStat1Desc">R&D + Marketing 最佳特徵組合</div>
           </div>
         </div>
 
         <div class="hero-stat-box">
           <div class="stat-box-icon icon-cyan"><i class="fa-solid fa-bullseye"></i></div>
           <div class="stat-box-text">
-            <div class="val">$8,198.80</div>
-            <div class="desc">全局最低測試集 RMSE</div>
+            <div class="val" id="heroStat2Val">$8,198.80</div>
+            <div class="desc" id="heroStat2Desc">全局最低測試集 RMSE</div>
           </div>
         </div>
 
         <div class="hero-stat-box">
           <div class="stat-box-icon icon-violet"><i class="fa-solid fa-chart-pie"></i></div>
           <div class="stat-box-text">
-            <div class="val">94.74% (R²)</div>
-            <div class="desc">最高利潤變異解釋率</div>
+            <div class="val" id="heroStat3Val">94.74% (R²)</div>
+            <div class="desc" id="heroStat3Desc">最高利潤變異解釋率</div>
           </div>
         </div>
 
         <div class="hero-stat-box">
           <div class="stat-box-icon icon-amber"><i class="fa-solid fa-triangle-exclamation"></i></div>
           <div class="stat-box-text">
-            <div class="val">$9,137.99 (k=5)</div>
-            <div class="desc">過擬合峭壁測試誤差陡升</div>
+            <div class="val" id="heroStat4Val">$9,137.99 (k=5)</div>
+            <div class="desc" id="heroStat4Desc">過擬合峭壁測試誤差陡升</div>
           </div>
         </div>
       </div>
@@ -1005,27 +1060,27 @@
 
       <span class="dock-label"><i class="fa-solid fa-sliders"></i> 2. 選擇特徵數量階層 (Feature Count k = 1 ~ 5)</span>
       <div class="k-step-container" id="kSelectorGroup">
-        <button class="k-btn" data-k="1">
-          <i class="fa-solid fa-1"></i> k = 1 (R&D Only)
+        <button class="k-btn" data-k="1" id="kBtn1">
+          <i class="fa-solid fa-1"></i> <span class="k-text">k = 1</span>
         </button>
-        <button class="k-btn sweet-spot active" data-k="2">
-          <i class="fa-solid fa-star"></i> k = 2 ★ Optimal Sweet Spot (Min RMSE)
+        <button class="k-btn sweet-spot active" data-k="2" id="kBtn2">
+          <i class="fa-solid fa-star"></i> <span class="k-text">k = 2 ★ Optimal Sweet Spot</span>
         </button>
-        <button class="k-btn" data-k="3">
-          <i class="fa-solid fa-3"></i> k = 3 (+ State / Admin)
+        <button class="k-btn" data-k="3" id="kBtn3">
+          <i class="fa-solid fa-3"></i> <span class="k-text">k = 3</span>
         </button>
-        <button class="k-btn" data-k="4">
-          <i class="fa-solid fa-4"></i> k = 4 (4 Predictors)
+        <button class="k-btn" data-k="4" id="kBtn4">
+          <i class="fa-solid fa-4"></i> <span class="k-text">k = 4</span>
         </button>
-        <button class="k-btn overfitting" data-k="5">
-          <i class="fa-solid fa-triangle-exclamation"></i> k = 5 ⚠️ Full Model (Overfitting Cliff)
+        <button class="k-btn overfitting" data-k="5" id="kBtn5">
+          <i class="fa-solid fa-triangle-exclamation"></i> <span class="k-text">k = 5 ⚠️ Full Model</span>
         </button>
       </div>
     </section>
 
     <!-- Dynamic Metrics KPI Pods -->
     <section class="kpi-grid">
-      <div class="kpi-card sweet">
+      <div class="kpi-card sweet" id="cardRMSE">
         <div class="kpi-header">
           <span>Test Set RMSE</span>
           <span id="rmseBadge" class="badge-tag badge-green"><i class="fa-solid fa-award"></i> Optimal Sweet Spot</span>
@@ -1037,10 +1092,10 @@
       <div class="kpi-card">
         <div class="kpi-header">
           <span>R² Score (決定係數)</span>
-          <span class="badge-tag badge-cyan">94.7% Fit</span>
+          <span class="badge-tag badge-cyan" id="r2Badge">Peak Fit</span>
         </div>
         <div class="kpi-value" id="valR2">0.9474</div>
-        <div class="kpi-footer"><i class="fa-solid fa-chart-line" style="color: #38bdf8;"></i> 解釋 94.74% 之獲利變異</div>
+        <div class="kpi-footer" id="valR2Desc"><i class="fa-solid fa-chart-line" style="color: #38bdf8;"></i> 解釋 94.74% 之目標變異</div>
       </div>
 
       <div class="kpi-card">
@@ -1058,7 +1113,7 @@
           <span class="badge-tag badge-cyan">Avg Error</span>
         </div>
         <div class="kpi-value" id="valMAE">$6,886.59</div>
-        <div class="kpi-footer"><i class="fa-solid fa-dollar-sign"></i> 平均預測絕對誤差</div>
+        <div class="kpi-footer"><i class="fa-solid fa-calculator"></i> 平均預測絕對誤差</div>
       </div>
 
       <div class="kpi-card">
@@ -1091,9 +1146,9 @@
         <div class="card-title-bar">
           <div>
             <h3><i class="fa-solid fa-chart-line" style="color: var(--neon-cyan);"></i> RMSE by Number of Features</h3>
-            <div class="subtitle">測試集均方根誤差曲線：數值愈低愈佳，清晰可見 k=2 谷底與 k=5 跳升</div>
+            <div class="subtitle" id="rmseSub">測試集均方根誤差曲線：數值愈低愈佳，檢視甜蜜點與過擬合峭壁</div>
           </div>
-          <span class="badge-tag badge-cyan"><i class="fa-solid fa-circle-info"></i> U-Shape Tradeoff</span>
+          <span class="badge-tag badge-cyan"><i class="fa-solid fa-circle-info"></i> Tradeoff Curve</span>
         </div>
         <div class="chart-container">
           <canvas id="rmseChart"></canvas>
@@ -1104,9 +1159,9 @@
         <div class="card-title-bar">
           <div>
             <h3><i class="fa-solid fa-arrow-trend-up" style="color: var(--neon-emerald);"></i> R-squared by Number of Features</h3>
-            <div class="subtitle">模型決定係數曲線：k=2 達到頂峰 (0.9474)，隨後因雜訊而下滑</div>
+            <div class="subtitle" id="r2Sub">模型決定係數曲線：檢驗特徵增減對樣本外預測解釋力之影響</div>
           </div>
-          <span class="badge-tag badge-green"><i class="fa-solid fa-award"></i> Peak at k=2</span>
+          <span class="badge-tag badge-green"><i class="fa-solid fa-award"></i> Parsimony Fit</span>
         </div>
         <div class="chart-container">
           <canvas id="r2Chart"></canvas>
@@ -1122,17 +1177,17 @@
           <div class="terminal-dot dot-yellow"></div>
           <div class="terminal-dot dot-green"></div>
         </div>
-        <span style="font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.08em; text-transform: uppercase;">
+        <span style="font-size: 11px; font-weight: 700; color: #64748b; letter-spacing: 0.08em; text-transform: uppercase;" id="terminalEqTitle">
           <i class="fa-solid fa-terminal"></i> FITTED OLS REGRESSION EQUATION
         </span>
         <span class="badge-tag badge-blue" style="font-size: 10px;">OLS Verified</span>
       </div>
       <div class="equation-content" id="equationBox">
-        <span class="eq-target">Profit</span> = <span class="eq-intercept">46,346.34</span> <span class="eq-pos">+</span> 0.7886 × <span class="eq-var">(R&D Spend)</span> <span class="eq-pos">+</span> 0.0326 × <span class="eq-var">(Marketing Spend)</span>
+        <!-- Dynamically rendered -->
       </div>
     </section>
 
-    <!-- Split Grid: Table & Live Predictor -->
+    <!-- Split Grid: Table & Live Simulator -->
     <section class="split-grid" id="stats-model">
       <!-- Left Column: Coefficients Table -->
       <div class="glass-card">
@@ -1162,17 +1217,322 @@
         </div>
       </div>
 
-      <!-- Right Column: Live Profit Cockpit -->
+      <!-- Right Column: Live Prediction Simulator Cockpit -->
       <div class="glass-card" id="profit-cockpit">
         <div class="card-title-bar">
           <div>
-            <h3><i class="fa-solid fa-calculator" style="color: var(--neon-emerald);"></i> 即時利潤預測駕駛艙 (Live Profit Cockpit)</h3>
-            <div class="subtitle">拉動滑桿或輸入數值，即時演算當前模型的預測淨利</div>
+            <h3 id="simTitle"><i class="fa-solid fa-calculator" style="color: var(--neon-emerald);"></i> 即時利潤預測駕駛艙 (Live Simulator)</h3>
+            <div class="subtitle" id="simSubtitle">拉動滑桿或輸入數值，即時演算當前模型的預測輸出</div>
           </div>
           <span class="badge-tag badge-green"><i class="fa-solid fa-bolt"></i> Real-time</span>
         </div>
 
-        <div class="simulator-body">
+        <div class="simulator-body" id="simulatorControls">
+          <!-- Dynamically populated based on active dataset -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Test Set Residuals & Outliers Diagnostic Table -->
+    <section class="glass-card">
+      <div class="card-title-bar">
+        <div>
+          <h3><i class="fa-solid fa-magnifying-glass-chart" style="color: var(--neon-amber);"></i> 測試集殘差與離群值診斷 (Test Set Residuals & Outliers)</h3>
+          <div class="subtitle" id="outliersSubtitle">檢驗樣本外測試集之絕對殘差、百分比誤差與常態同質分佈</div>
+        </div>
+        <span class="badge-tag badge-cyan"><i class="fa-solid fa-filter"></i> Sorted by |Residual|</span>
+      </div>
+      <div class="table-wrapper">
+        <table class="dark-table">
+          <thead>
+            <tr>
+              <th>RANK</th>
+              <th>SAMPLE ID</th>
+              <th>ACTUAL</th>
+              <th>PREDICTED</th>
+              <th>RESIDUAL</th>
+              <th>ABS ERROR</th>
+              <th>% ERROR</th>
+              <th>DIAGNOSTIC STATUS</th>
+            </tr>
+          </thead>
+          <tbody id="outliersTableBody">
+            <!-- Dynamically rendered -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CRISP-DM Phase 5 Evaluation & Final Project Conclusions Section -->
+    <section class="glass-card" id="project-conclusions-section" style="border-left: 4px solid var(--neon-cyan);">
+      <div class="card-title-bar">
+        <div>
+          <h3 id="conclusionsHeaderTitle"><i class="fa-solid fa-graduation-cap" style="color: var(--neon-cyan);"></i> CRISP-DM Phase 5 & 6: Evaluation & Final Project Conclusions</h3>
+          <div class="subtitle" id="conclusionsHeaderSub">專案決策洞察、統計推論檢定、奧卡姆剃刀精簡分析與 AIoT 未來整合方向</div>
+        </div>
+        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="FINAL_PROJECT_CONCLUSIONS.md" target="_blank" class="ref-btn" id="conclusionsDocLink">
+            <i class="fa-solid fa-file-lines" style="color: var(--neon-cyan);"></i> 閱讀 Conclusions.md
+          </a>
+          <a href="verify_sweet_spot_evaluation.py" target="_blank" class="ref-btn" id="scriptLink">
+            <i class="fa-solid fa-code" style="color: var(--neon-emerald);"></i> 驗證腳本 .py
+          </a>
+          <a href="https://github.com/kelp11211/AIoT_DIC2_MultipleLR" target="_blank" class="ref-btn">
+            <i class="fa-brands fa-github"></i> GitHub Repo
+          </a>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; margin-top: 10px;" id="conclusionsCardsGrid">
+        <!-- Dynamically rendered based on active dataset -->
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-inner">
+      <div>
+        <p style="font-weight: 700; color: white; margin-bottom: 4px;">
+          <i class="fa-solid fa-atom" style="color: var(--neon-cyan);"></i> AIoT Machine Learning & CRISP-DM Multi-Problem Lab
+        </p>
+        <p>國立大學博士班課程：物聯網數據分析與應用 (AIoT Data Analytics & Applications) // DIC-2</p>
+      </div>
+
+      <div>
+        <p>Datasets: <span style="color: #38bdf8;">50 Startups</span> &amp; <span style="color: #34d399;">Boston Housing</span> | Architecture: <span style="color: var(--neon-cyan);">CRISP-DM</span></p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Application Logic Supporting Multi-Problem Switcher -->
+  <script>
+    // State management
+    let currentDatasetKey = 'startups'; // 'startups' or 'boston'
+    let currentAlgo = 'Lasso';
+    let currentK = 2; // Default for startups
+    let rmseChartInstance = null;
+    let r2ChartInstance = null;
+
+    const ALGO_COLORS = {
+      'Lasso': '#06b6d4',
+      'Forward SFS': '#f59e0b',
+      'RFE': '#10b981',
+      'ElasticNet': '#f43f5e',
+      'Exhaustive': '#8b5cf6'
+    };
+
+    // Conclusions Content Store for both datasets
+    const CONCLUSIONS_DATA = {
+      startups: {
+        docLink: 'FINAL_PROJECT_CONCLUSIONS.md',
+        docLabel: '閱讀 Startups Conclusions.md',
+        scriptLink: '50_Startups.py',
+        scriptLabel: '50_Startups.py 訓練腳本',
+        cards: [
+          {
+            icon: 'fa-solid fa-lightbulb',
+            colorBg: 'rgba(6, 182, 212, 0.15)',
+            colorIcon: 'var(--neon-cyan)',
+            title: '1. 商業與管理決策洞察',
+            items: [
+              '<strong>研發支出為獲利關鍵核心</strong>：研發與淨利相關係數高達 <strong>0.973</strong>，每投入 $1 美元，預期邊際貢獻約 <strong>+$0.79</strong> 美元 (p < 0.0001)。',
+              '<strong>行政管理費用中立</strong>：係數接近 0 且未達統計顯著 (p > 0.05)，草創與成長階段過度擴張行政支出無法轉化為利潤。',
+              '<strong>地理位置不敏感</strong>：紐約、加州、佛州三地虛擬變數皆不顯著，雲端與數位營運下實體位置非決定獲利之關鍵門檻。'
+            ]
+          },
+          {
+            icon: 'fa-solid fa-scale-balanced',
+            colorBg: 'rgba(16, 185, 129, 0.15)',
+            colorIcon: 'var(--neon-emerald)',
+            title: '2. 奧卡姆剃刀與特徵精簡',
+            items: [
+              '<strong>5 種演算法高度一致</strong>：Lasso、Forward SFS、RFE、ElasticNet、Exhaustive Search 皆排序 R&D 與 Marketing 為前兩大特徵。',
+              '<strong>全局最佳甜蜜點 (k=2)</strong>：最低測試 RMSE (<strong>$8,198.80</strong>) 與最高 R² (<strong>0.9474</strong>)，調整後 R² 達 <strong>0.9324</strong>。',
+              '<strong>過擬合峭壁警示 (k=5)</strong>：納入無效變數導致測試 RMSE 顯著跳升至 <strong>$9,055 ~ $9,138</strong>，證明少即是多（Less is more）。'
+            ]
+          },
+          {
+            icon: 'fa-solid fa-triangle-exclamation',
+            colorBg: 'rgba(245, 158, 11, 0.15)',
+            colorIcon: 'var(--neon-amber)',
+            title: '3. 研究局限性分析',
+            items: [
+              '<strong>樣本規模局限 (N=50)</strong>：樣本量偏小，極端值（如高研發低利潤個案）對迴歸超平面具有較大槓桿影響力。',
+              '<strong>線性假定之侷限</strong>：普通最小平方法 (OLS) 未能捕捉研發投入之邊際報酬遞減或門檻躍升效應。',
+              '<strong>存活者偏差 (Survivorship Bias)</strong>：僅調查持續營運並獲利之新創企業，排除倒閉案例，結果可能帶有樂觀偏誤。'
+            ]
+          },
+          {
+            icon: 'fa-solid fa-microchip',
+            colorBg: 'rgba(139, 92, 246, 0.15)',
+            colorIcon: 'var(--neon-violet)',
+            title: '4. 未來延伸與 AIoT 整合',
+            items: [
+              '<strong>整合物聯網即時遙測</strong>：從靜態財報擴展至工廠設備稼動率、雲端算力消耗量、邊緣感測器頻寬等高頻即時數據。',
+              '<strong>導入現代非線性集成演算法</strong>：引入 XGBoost / LightGBM 捕捉特徵交互作用，結合 SHAP 進行模型可解釋性分析。',
+              '<strong>端到端即時決策系統部署</strong>：將 Pipeline (<code>startup_profit_lr.pkl</code>) 串接 REST API，提供動態預算情境模擬。'
+            ]
+          }
+        ]
+      },
+      boston: {
+        docLink: 'BOSTON_HOUSING_CONCLUSIONS.md',
+        docLabel: '閱讀 Boston Conclusions.md',
+        scriptLink: 'boston_housing.py',
+        scriptLabel: 'boston_housing.py 訓練腳本',
+        cards: [
+          {
+            icon: 'fa-solid fa-house',
+            colorBg: 'rgba(16, 185, 129, 0.15)',
+            colorIcon: 'var(--neon-emerald)',
+            title: '1. 不動產估價與都市規劃洞察',
+            items: [
+              '<strong>房屋規格為核心基石</strong>：平均房間數 (RM) 與房價高度正相關 (r = 0.695)，每增加 1 間房，房價中位數提升約 <strong>+$4,933</strong> 美元 (p < 0.0001)。',
+              '<strong>社區階層折價效應</strong>：中低所得人口比例 (LSTAT) 每增加 1%，房價下跌約 <strong>-$567</strong> 美元 (p < 0.0001)，反映社區資本之強烈折價。',
+              '<strong>優質學區之強烈溢價</strong>：師生比 (PTRATIO) 每增加 1 單位，房價下降約 <strong>-$867</strong> 美元 (p < 0.0001)，突顯教育資源對資產保值之溢價。'
+            ]
+          },
+          {
+            icon: 'fa-solid fa-scale-balanced',
+            colorBg: 'rgba(6, 182, 212, 0.15)',
+            colorIcon: 'var(--neon-cyan)',
+            title: '2. 奧卡姆剃刀與特徵精簡 (k=3)',
+            items: [
+              '<strong>5 種演算法一致篩選</strong>：跨方法一致將 <code>RM</code>、<code>LSTAT</code> 與 <code>PTRATIO</code> 列為最具預測價值前三大變數。',
+              '<strong>全局最佳甜蜜點 (k=3)</strong>：最低測試 RMSE (<strong>$5.21k / $5,207</strong>) 與最高 R² (<strong>0.6303</strong>)，泛化能力優異。',
+              '<strong>消除多重共線性風險</strong>：原始 TAX 與 RAD 相關度高達 0.91 (VIF > 7.5)，精簡模型大幅降至安全區間 (VIF < 2.5)。'
+            ]
+          },
+          {
+            icon: 'fa-solid fa-triangle-exclamation',
+            colorBg: 'rgba(245, 158, 11, 0.15)',
+            colorIcon: 'var(--neon-amber)',
+            title: '3. 研究局限性與倫理審查',
+            items: [
+              '<strong>歷史數據與通膨平減</strong>：取樣於 1970 年代波士頓，應用於現代市場須校正都市變遷與物價平減指數 (CPI)。',
+              '<strong>非線性與雙曲線特徵</strong>：LSTAT 與房價呈現反比雙曲線非線性，單純線性迴歸對極端區塊容易產生殘差偏誤。',
+              '<strong>公平機器學習倫理</strong>：原資料集中變數 B 帶有歷史種族隔離背景，現代 Fair ML 與 ESG 應剔除爭議特徵。'
+            ]
+          },
+          {
+            icon: 'fa-solid fa-city',
+            colorBg: 'rgba(139, 92, 246, 0.15)',
+            colorIcon: 'var(--neon-violet)',
+            title: '4. AIoT 智慧城市延伸方向',
+            items: [
+              '<strong>智慧城市微型感測整合</strong>：串接分散式微氣候空氣感測器（取代固定 NOX）、即時交通流速雷達（取代固定 DIS）。',
+              '<strong>空間地理加權迴歸 (GWR)</strong>：結合 GIS 空間自相關與 XGBoost 集成學習，捕捉微型商圈之複雜非線性溢價效應。',
+              '<strong>雲端 AVM 自動估價系統</strong>：將 Pipeline (<code>boston_housing_lr.pkl</code>) 部署為微服務 API，實現即時動態房產估價與貸款成數評定。'
+            ]
+          }
+        ]
+      }
+    };
+
+    // Initialize application
+    document.addEventListener('DOMContentLoaded', () => {
+      initCharts();
+      setupEventListeners();
+      switchDataset('startups');
+    });
+
+    function setupEventListeners() {
+      // Problem Switcher
+      const switchBtns = document.querySelectorAll('#problemSwitcher .switcher-btn');
+      switchBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchBtns.forEach(b => {
+            b.classList.remove('active');
+            b.classList.remove('boston-active');
+          });
+          btn.classList.add('active');
+          if (btn.dataset.dataset === 'boston') {
+            btn.classList.add('boston-active');
+          }
+          switchDataset(btn.dataset.dataset);
+        });
+      });
+
+      // Algorithm tabs
+      const tabs = document.querySelectorAll('#algoTabs .tab-btn');
+      tabs.forEach(btn => {
+        btn.addEventListener('click', () => {
+          tabs.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentAlgo = btn.dataset.algo;
+          updateDashboard();
+        });
+      });
+
+      // Feature count buttons
+      const kBtns = document.querySelectorAll('#kSelectorGroup .k-btn');
+      kBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          kBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          currentK = parseInt(btn.dataset.k);
+          updateDashboard();
+        });
+      });
+    }
+
+    function switchDataset(datasetKey) {
+      currentDatasetKey = datasetKey;
+      const ds = window.DATASETS[datasetKey];
+      if (!ds) return;
+
+      currentK = ds.sweetK; // Default to the dataset's sweet spot
+
+      // Update K Button styles based on dataset
+      for (let i = 1; i <= 5; i++) {
+        const btn = document.getElementById('kBtn' + i);
+        btn.classList.remove('active', 'sweet-spot', 'overfitting');
+        const textSpan = btn.querySelector('.k-text');
+        
+        if (i === ds.sweetK) {
+          btn.classList.add('sweet-spot', 'active');
+          textSpan.innerHTML = `k = ${i} ★ Optimal Sweet Spot`;
+        } else if (i === ds.cliffK) {
+          btn.classList.add('overfitting');
+          textSpan.innerHTML = `k = ${i} ⚠️ Overfitting Cliff`;
+        } else {
+          textSpan.innerHTML = `k = ${i}`;
+        }
+      }
+
+      // Update Hero Cockpit Text & Stats
+      document.getElementById('heroEyebrow').innerHTML = `<i class="fa-solid fa-microchip"></i> ${ds.heroEyebrow}`;
+      document.getElementById('heroTitle').textContent = ds.heroTitle;
+      document.getElementById('heroDesc').textContent = ds.heroDesc;
+
+      document.getElementById('heroStat1Val').textContent = ds.stat1.val;
+      document.getElementById('heroStat1Desc').textContent = ds.stat1.desc;
+      document.getElementById('heroStat2Val').textContent = ds.stat2.val;
+      document.getElementById('heroStat2Desc').textContent = ds.stat2.desc;
+      document.getElementById('heroStat3Val').textContent = ds.stat3.val;
+      document.getElementById('heroStat3Desc').textContent = ds.stat3.desc;
+      document.getElementById('heroStat4Val').textContent = ds.stat4.val;
+      document.getElementById('heroStat4Desc').textContent = ds.stat4.desc;
+
+      // Update Simulator Controls HTML
+      buildSimulatorControls(datasetKey);
+
+      // Update Conclusions Section
+      buildConclusionsSection(datasetKey);
+
+      // Re-render dashboard
+      updateDashboard();
+    }
+
+    function buildSimulatorControls(datasetKey) {
+      const container = document.getElementById('simulatorControls');
+      if (datasetKey === 'startups') {
+        document.getElementById('simTitle').innerHTML = '<i class="fa-solid fa-calculator" style="color: var(--neon-emerald);"></i> 即時利潤預測駕駛艙 (Live Profit Cockpit)';
+        document.getElementById('simSubtitle').textContent = '拉動滑桿或輸入數值，即時演算當前模型的預測淨利';
+
+        container.innerHTML = `
           <!-- R&D Slider -->
           <div class="sim-slider-group">
             <div class="sim-label-row">
@@ -1226,234 +1586,193 @@
             <div class="profit-output-label">PREDICTED STARTUP PROFIT (預測淨利)</div>
             <div class="profit-output-amount" id="predProfitOutput">$130,094.66</div>
             <div class="profit-output-note" id="predFormulaNote">
-              Active predictors: R&D Spend, Marketing Spend<br>
-              <span style="font-size: 11px; color: #94a3b8;">(R&D: +$78,862 | Marketing: +$4,886)</span>
+              Active predictors: R&D Spend, Marketing Spend
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+        `;
 
-    <!-- Test Set Residuals & Outliers Diagnostic Table -->
-    <section class="glass-card">
-      <div class="card-title-bar">
-        <div>
-          <h3><i class="fa-solid fa-magnifying-glass-chart" style="color: var(--neon-amber);"></i> 測試集殘差與離群值診斷 (Test Set Residuals & Outliers)</h3>
-          <div class="subtitle">檢驗樣本外測試集（10 家新創公司）之絕對殘差、百分比誤差與常態同質分佈</div>
-        </div>
-        <span class="badge-tag badge-cyan"><i class="fa-solid fa-filter"></i> Sorted by |Residual|</span>
-      </div>
-      <div class="table-wrapper">
-        <table class="dark-table">
-          <thead>
-            <tr>
-              <th>RANK</th>
-              <th>SAMPLE ID</th>
-              <th>ACTUAL PROFIT</th>
-              <th>PREDICTED PROFIT</th>
-              <th>RESIDUAL ($)</th>
-              <th>ABS ERROR</th>
-              <th>% ERROR</th>
-              <th>DIAGNOSTIC STATUS</th>
-            </tr>
-          </thead>
-          <tbody id="outliersTableBody">
-            <!-- Dynamically rendered -->
-          </tbody>
-        </table>
-      </div>
-    </section>
+        // Bind Startups Inputs
+        const syncInput = (sliderId, numId, labelId) => {
+          const slider = document.getElementById(sliderId);
+          const num = document.getElementById(numId);
+          const label = document.getElementById(labelId);
+          slider.addEventListener('input', (e) => {
+            num.value = e.target.value;
+            label.textContent = '$' + Number(e.target.value).toLocaleString();
+            calculateLivePrediction();
+          });
+          num.addEventListener('input', (e) => {
+            slider.value = e.target.value;
+            label.textContent = '$' + Number(e.target.value).toLocaleString();
+            calculateLivePrediction();
+          });
+        };
+        syncInput('rangeRD', 'numRD', 'labelRD');
+        syncInput('rangeMkt', 'numMkt', 'labelMkt');
+        syncInput('rangeAdmin', 'numAdmin', 'labelAdmin');
+        document.getElementById('selectState').addEventListener('change', calculateLivePrediction);
 
-    <!-- CRISP-DM Phase 5 Evaluation & Final Project Conclusions Section -->
-    <section class="glass-card" id="project-conclusions-section" style="border-left: 4px solid var(--neon-cyan);">
-      <div class="card-title-bar">
-        <div>
-          <h3><i class="fa-solid fa-graduation-cap" style="color: var(--neon-cyan);"></i> CRISP-DM Phase 5 & 6: Evaluation & Final Project Conclusions</h3>
-          <div class="subtitle">專案決策洞察、統計推論檢定、奧卡姆剃刀精簡分析與 AIoT 未來整合方向</div>
-        </div>
-        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-          <a href="FINAL_PROJECT_CONCLUSIONS.md" target="_blank" class="ref-btn">
-            <i class="fa-solid fa-file-lines" style="color: var(--neon-cyan);"></i> 閱讀 Conclusions.md
-          </a>
-          <a href="verify_sweet_spot_evaluation.py" target="_blank" class="ref-btn">
-            <i class="fa-solid fa-code" style="color: var(--neon-emerald);"></i> 驗證腳本 .py
-          </a>
-          <a href="https://github.com/kelp11211/AIoT_DIC2_MultipleLR" target="_blank" class="ref-btn">
-            <i class="fa-brands fa-github"></i> GitHub Repo
-          </a>
-        </div>
-      </div>
+      } else {
+        // Boston Housing Simulator
+        document.getElementById('simTitle').innerHTML = '<i class="fa-solid fa-house-chimney" style="color: var(--neon-emerald);"></i> 波士頓房產價值即時估價 (Live Housing Valuation)';
+        document.getElementById('simSubtitle').textContent = '調節房屋規格 (RM)、學區環境 (PTRATIO) 與社區階層 (LSTAT) 即時估價';
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 18px; margin-top: 10px;">
-        <!-- Card 1 -->
-        <div style="background: rgba(14, 19, 31, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: 20px;">
+        container.innerHTML = `
+          <!-- RM Slider -->
+          <div class="sim-slider-group">
+            <div class="sim-label-row">
+              <span><i class="fa-solid fa-door-open" style="color: var(--neon-cyan);"></i> RM (每戶平均房間數)</span>
+              <span class="sim-val-badge" id="labelRM">6.5 間</span>
+            </div>
+            <input type="range" class="cyber-slider" id="rangeRM" min="3.0" max="9.0" step="0.1" value="6.5">
+            <div class="sim-input-row">
+              <input type="number" class="sim-number-input" id="numRM" value="6.5" step="0.1">
+            </div>
+          </div>
+
+          <!-- LSTAT Slider -->
+          <div class="sim-slider-group">
+            <div class="sim-label-row">
+              <span><i class="fa-solid fa-users" style="color: var(--neon-rose);"></i> LSTAT (中低所得人口比例 %)</span>
+              <span class="sim-val-badge" id="labelLSTAT">8.5%</span>
+            </div>
+            <input type="range" class="cyber-slider" id="rangeLSTAT" min="1.0" max="40.0" step="0.5" value="8.5">
+            <div class="sim-input-row">
+              <input type="number" class="sim-number-input" id="numLSTAT" value="8.5" step="0.5">
+            </div>
+          </div>
+
+          <!-- PTRATIO Slider -->
+          <div class="sim-slider-group">
+            <div class="sim-label-row">
+              <span><i class="fa-solid fa-graduation-cap" style="color: var(--neon-amber);"></i> PTRATIO (學區生師比)</span>
+              <span class="sim-val-badge" id="labelPTRATIO">16.0 : 1</span>
+            </div>
+            <input type="range" class="cyber-slider" id="rangePTRATIO" min="10.0" max="25.0" step="0.5" value="16.0">
+            <div class="sim-input-row">
+              <input type="number" class="sim-number-input" id="numPTRATIO" value="16.0" step="0.5">
+            </div>
+          </div>
+
+          <!-- DIS Slider -->
+          <div class="sim-slider-group">
+            <div class="sim-label-row">
+              <span><i class="fa-solid fa-route" style="color: var(--neon-violet);"></i> DIS (就業中心加權距離)</span>
+              <span class="sim-val-badge" id="labelDIS">4.0</span>
+            </div>
+            <input type="range" class="cyber-slider" id="rangeDIS" min="1.0" max="12.0" step="0.2" value="4.0">
+            <div class="sim-input-row">
+              <input type="number" class="sim-number-input" id="numDIS" value="4.0" step="0.2">
+            </div>
+          </div>
+
+          <!-- Output Box -->
+          <div class="profit-output-card">
+            <div class="profit-output-label">PREDICTED MEDIAN HOME VALUE (MEDV)</div>
+            <div class="profit-output-amount" id="predProfitOutput">$27.96k ($27,959)</div>
+            <div class="profit-output-note" id="predFormulaNote">
+              Active predictors: RM, PTRATIO, LSTAT
+            </div>
+          </div>
+        `;
+
+        // Bind Boston Inputs
+        const syncBostonInput = (sliderId, numId, labelId, suffix = '') => {
+          const slider = document.getElementById(sliderId);
+          const num = document.getElementById(numId);
+          const label = document.getElementById(labelId);
+          slider.addEventListener('input', (e) => {
+            num.value = e.target.value;
+            label.textContent = e.target.value + suffix;
+            calculateLivePrediction();
+          });
+          num.addEventListener('input', (e) => {
+            slider.value = e.target.value;
+            label.textContent = e.target.value + suffix;
+            calculateLivePrediction();
+          });
+        };
+        syncBostonInput('rangeRM', 'numRM', 'labelRM', ' 間');
+        syncBostonInput('rangeLSTAT', 'numLSTAT', 'labelLSTAT', '%');
+        syncBostonInput('rangePTRATIO', 'numPTRATIO', 'labelPTRATIO', ' : 1');
+        syncBostonInput('rangeDIS', 'numDIS', 'labelDIS', '');
+      }
+    }
+
+    function buildConclusionsSection(datasetKey) {
+      const data = CONCLUSIONS_DATA[datasetKey];
+      if (!data) return;
+
+      const docLink = document.getElementById('conclusionsDocLink');
+      docLink.href = data.docLink;
+      docLink.innerHTML = `<i class="fa-solid fa-file-lines" style="color: var(--neon-cyan);"></i> ${data.docLabel}`;
+
+      const scriptLink = document.getElementById('scriptLink');
+      scriptLink.href = data.scriptLink;
+      scriptLink.innerHTML = `<i class="fa-solid fa-code" style="color: var(--neon-emerald);"></i> ${data.scriptLabel}`;
+
+      const grid = document.getElementById('conclusionsCardsGrid');
+      grid.innerHTML = '';
+
+      data.cards.forEach(c => {
+        const cardEl = document.createElement('div');
+        cardEl.style.background = 'rgba(14, 19, 31, 0.7)';
+        cardEl.style.border = '1px solid rgba(255, 255, 255, 0.08)';
+        cardEl.style.borderRadius = 'var(--radius-md)';
+        cardEl.style.padding = '20px';
+
+        cardEl.innerHTML = `
           <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-            <span style="background: rgba(6, 182, 212, 0.15); color: var(--neon-cyan); padding: 8px 12px; border-radius: 8px; font-size: 15px;"><i class="fa-solid fa-lightbulb"></i></span>
-            <h4 style="font-size: 15px; font-weight: 700; color: white;">1. 商業與管理決策洞察</h4>
+            <span style="background: ${c.colorBg}; color: ${c.colorIcon}; padding: 8px 12px; border-radius: 8px; font-size: 15px;"><i class="${c.icon}"></i></span>
+            <h4 style="font-size: 15px; font-weight: 700; color: white;">${c.title}</h4>
           </div>
           <ul style="font-size: 13px; color: #cbd5e1; line-height: 1.65; padding-left: 18px;">
-            <li><strong>研發支出為獲利關鍵核心</strong>：研發與淨利相關係數高達 <strong>0.973</strong>，每投入 $1 美元，預期邊際貢獻約 <strong>+$0.79</strong> 美元 (p &lt; 0.0001)。</li>
-            <li><strong>行政管理費用中立</strong>：係數接近 0 且未達統計顯著 (p &gt; 0.05)，草創與成長階段過度擴張行政支出無法轉化為利潤。</li>
-            <li><strong>地理位置不敏感</strong>：紐約、加州、佛州三地虛擬變數皆不顯著，雲端與數位營運下實體位置非決定獲利之關鍵門檻。</li>
+            ${c.items.map(it => `<li>${it}</li>`).join('')}
           </ul>
-        </div>
-
-        <!-- Card 2 -->
-        <div style="background: rgba(14, 19, 31, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: 20px;">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-            <span style="background: rgba(16, 185, 129, 0.15); color: var(--neon-emerald); padding: 8px 12px; border-radius: 8px; font-size: 15px;"><i class="fa-solid fa-scale-balanced"></i></span>
-            <h4 style="font-size: 15px; font-weight: 700; color: white;">2. 奧卡姆剃刀與特徵精簡</h4>
-          </div>
-          <ul style="font-size: 13px; color: #cbd5e1; line-height: 1.65; padding-left: 18px;">
-            <li><strong>5 種演算法高度一致</strong>：Lasso、Forward SFS、RFE、ElasticNet、Exhaustive Search 皆排序 R&amp;D 與 Marketing 為前兩大特徵。</li>
-            <li><strong>全局最佳甜蜜點 (k=2)</strong>：最低測試 RMSE (<strong>$8,198.80</strong>) 與最高 R² (<strong>0.9474</strong>)，調整後 R² 達 <strong>0.9324</strong>。</li>
-            <li><strong>過擬合峭壁警示 (k=5)</strong>：納入無效變數導致測試 RMSE 顯著跳升至 <strong>$9,055 ~ $9,138</strong>，證明少即是多（Less is more）。</li>
-          </ul>
-        </div>
-
-        <!-- Card 3 -->
-        <div style="background: rgba(14, 19, 31, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: 20px;">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-            <span style="background: rgba(245, 158, 11, 0.15); color: var(--neon-amber); padding: 8px 12px; border-radius: 8px; font-size: 15px;"><i class="fa-solid fa-triangle-exclamation"></i></span>
-            <h4 style="font-size: 15px; font-weight: 700; color: white;">3. 研究局限性分析</h4>
-          </div>
-          <ul style="font-size: 13px; color: #cbd5e1; line-height: 1.65; padding-left: 18px;">
-            <li><strong>樣本規模局限 (N=50)</strong>：樣本量偏小，極端值（如高研發低利潤個案）對迴歸超平面具有較大槓桿影響力。</li>
-            <li><strong>線性假定之侷限</strong>：普通最小平方法 (OLS) 未能捕捉研發投入之邊際報酬遞減或門檻躍升效應。</li>
-            <li><strong>存活者偏差 (Survivorship Bias)</strong>：僅調查持續營運並獲利之新創企業，排除倒閉案例，結果可能帶有樂觀偏誤。</li>
-          </ul>
-        </div>
-
-        <!-- Card 4 -->
-        <div style="background: rgba(14, 19, 31, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: var(--radius-md); padding: 20px;">
-          <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 12px;">
-            <span style="background: rgba(139, 92, 246, 0.15); color: var(--neon-violet); padding: 8px 12px; border-radius: 8px; font-size: 15px;"><i class="fa-solid fa-microchip"></i></span>
-            <h4 style="font-size: 15px; font-weight: 700; color: white;">4. 未來延伸與 AIoT 整合</h4>
-          </div>
-          <ul style="font-size: 13px; color: #cbd5e1; line-height: 1.65; padding-left: 18px;">
-            <li><strong>整合物聯網即時遙測</strong>：從靜態財報擴展至工廠設備稼動率、雲端算力消耗量、邊緣感測器頻寬等高頻即時數據。</li>
-            <li><strong>導入現代非線性集成演算法</strong>：引入 XGBoost / LightGBM 捕捉特徵交互作用，結合 SHAP 進行模型可解釋性分析。</li>
-            <li><strong>端到端即時決策系統部署</strong>：將 Pipeline (<code style="background: rgba(255,255,255,0.08); color: #38bdf8; padding: 2px 6px; border-radius: 4px; font-family: monospace;">startup_profit_lr.pkl</code>) 串接 REST API，提供動態預算情境模擬。</li>
-          </ul>
-        </div>
-      </div>
-    </section>
-
-  </div>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <div>
-        <p style="font-weight: 700; color: white; margin-bottom: 4px;">
-          <i class="fa-solid fa-atom" style="color: var(--neon-cyan);"></i> 50 Startups CRISP-DM Machine Learning Project
-        </p>
-        <p>國立大學博士班課程：物聯網數據分析與應用 (AIoT Data Analytics & Applications) // DIC-2</p>
-      </div>
-
-      <div>
-        <p>Design Style: <span style="color: #cbd5e1;">Cyber-Glassmorphism Cockpit</span> | Methodology: <span style="color: var(--neon-cyan);">CRISP-DM</span></p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Core Dashboard Application Script -->
-  <script>
-    // State management
-    let currentAlgo = 'Lasso';
-    let currentK = 2; // Default to optimal sweet spot
-    let rmseChartInstance = null;
-    let r2ChartInstance = null;
-
-    const ALGO_COLORS = {
-      'Lasso': '#06b6d4',
-      'Forward SFS': '#f59e0b',
-      'RFE': '#10b981',
-      'ElasticNet': '#f43f5e',
-      'Exhaustive': '#8b5cf6'
-    };
-
-    // Initialize application
-    document.addEventListener('DOMContentLoaded', () => {
-      initCharts();
-      setupEventListeners();
-      updateDashboard();
-    });
-
-    function setupEventListeners() {
-      // Algorithm tabs
-      const tabs = document.querySelectorAll('#algoTabs .tab-btn');
-      tabs.forEach(btn => {
-        btn.addEventListener('click', () => {
-          tabs.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentAlgo = btn.dataset.algo;
-          updateDashboard();
-        });
+        `;
+        grid.appendChild(cardEl);
       });
-
-      // Feature count buttons
-      const kBtns = document.querySelectorAll('#kSelectorGroup .k-btn');
-      kBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          kBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          currentK = parseInt(btn.dataset.k);
-          updateDashboard();
-        });
-      });
-
-      // Interactive Calculator Sliders & Number inputs
-      const syncInput = (sliderId, numId, labelId, prefix = '$') => {
-        const slider = document.getElementById(sliderId);
-        const num = document.getElementById(numId);
-        const label = document.getElementById(labelId);
-
-        slider.addEventListener('input', (e) => {
-          num.value = e.target.value;
-          label.textContent = prefix + Number(e.target.value).toLocaleString();
-          calculateLivePrediction();
-        });
-
-        num.addEventListener('input', (e) => {
-          slider.value = e.target.value;
-          label.textContent = prefix + Number(e.target.value).toLocaleString();
-          calculateLivePrediction();
-        });
-      };
-
-      syncInput('rangeRD', 'numRD', 'labelRD');
-      syncInput('rangeMkt', 'numMkt', 'labelMkt');
-      syncInput('rangeAdmin', 'numAdmin', 'labelAdmin');
-      document.getElementById('selectState').addEventListener('change', calculateLivePrediction);
     }
 
     function getActiveModelData() {
+      const ds = window.DATASETS[currentDatasetKey];
+      if (!ds) return null;
       if (currentAlgo === 'ALL') {
-        return window.MODEL_DATA['Lasso'][currentK - 1];
+        return ds.models['Lasso'][currentK - 1];
       }
-      return window.MODEL_DATA[currentAlgo][currentK - 1];
+      return ds.models[currentAlgo][currentK - 1];
     }
 
     function updateDashboard() {
+      const ds = window.DATASETS[currentDatasetKey];
       const data = getActiveModelData();
-      if (!data) return;
+      if (!data || !ds) return;
 
       // Update KPI Cards
-      document.getElementById('valRMSE').textContent = '$' + data.rmse.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      const isBoston = currentDatasetKey === 'boston';
+      const rmseVal = isBoston 
+        ? `$${data.rmse.toFixed(2)}k ($${(data.rmse * 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })})`
+        : '$' + data.rmse.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      
+      const maeVal = isBoston 
+        ? `$${data.mae.toFixed(2)}k ($${(data.mae * 1000).toLocaleString('en-US', { maximumFractionDigits: 0 })})`
+        : '$' + data.mae.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+
+      document.getElementById('valRMSE').textContent = rmseVal;
       document.getElementById('valR2').textContent = data.r2.toFixed(4);
       document.getElementById('valAdjR2').textContent = data.adj_r2 ? data.adj_r2.toFixed(4) : 'N/A';
-      document.getElementById('valMAE').textContent = '$' + data.mae.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+      document.getElementById('valMAE').textContent = maeVal;
       document.getElementById('valFStat').textContent = data.f_stat ? data.f_stat.toFixed(1) : '349.0';
+      document.getElementById('valR2Desc').innerHTML = `<i class="fa-solid fa-chart-line" style="color: #38bdf8;"></i> 解釋 ${(data.r2 * 100).toFixed(2)}% 之${ds.target}變異`;
 
       // Sweet spot & Overfitting badges
       const rmseBadge = document.getElementById('rmseBadge');
-      if (currentK === 2) {
+      if (currentK === ds.sweetK) {
         rmseBadge.className = 'badge-tag badge-green';
         rmseBadge.innerHTML = '<i class="fa-solid fa-award"></i> Optimal Sweet Spot';
-      } else if (currentK === 5) {
+      } else if (currentK === ds.cliffK) {
         rmseBadge.className = 'badge-tag badge-amber';
-        rmseBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Overfitting Cliff';
+        rmseBadge.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> Overfitting Warning';
       } else {
         rmseBadge.className = 'badge-tag badge-cyan';
         rmseBadge.innerHTML = `k = ${currentK}`;
@@ -1472,12 +1791,12 @@
 
       // Parsimony notice
       const notice = document.getElementById('parsimonyNotice');
-      if (currentK === 2) {
+      if (currentK === ds.sweetK) {
         notice.className = 'badge-tag badge-green';
-        notice.innerHTML = '<i class="fa-solid fa-star"></i> 奧卡姆剃刀實證：2 個特徵獲得最低測試 RMSE ($8,198.80) 與最高 R² (0.9474)';
-      } else if (currentK === 5) {
+        notice.innerHTML = `<i class="fa-solid fa-star"></i> ${ds.sweetNotice}`;
+      } else if (currentK === ds.cliffK) {
         notice.className = 'badge-tag badge-amber';
-        notice.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> 過擬合峭壁警示：納入行政管理支出與州別使測試誤差陡升至 $9,137.99!';
+        notice.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${ds.cliffNotice}`;
       } else {
         notice.className = 'badge-tag badge-cyan';
         notice.innerHTML = `<i class="fa-solid fa-circle-info"></i> 當前模型使用 ${currentK} 個預測變數進行評估。`;
@@ -1501,11 +1820,13 @@
 
     function updateEquation(coefficients) {
       const box = document.getElementById('equationBox');
+      const ds = window.DATASETS[currentDatasetKey];
+      const targetLabel = currentDatasetKey === 'boston' ? 'MEDV ($1000s)' : 'Profit';
       const intercept = coefficients.find(c => c.feature.includes('Intercept'));
       let parts = [];
 
       if (intercept) {
-        parts.push(`<span class="eq-intercept">${intercept.coef.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>`);
+        parts.push(`<span class="eq-intercept">${intercept.coef.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 4 })}</span>`);
       }
 
       coefficients.forEach(c => {
@@ -1515,7 +1836,7 @@
         parts.push(`${sign} ${absVal} × <span class="eq-var">(${c.feature})</span>`);
       });
 
-      box.innerHTML = `<span class="eq-target">Profit</span> = ${parts.join(' ')}`;
+      box.innerHTML = `<span class="eq-target">${targetLabel}</span> = ${parts.join(' ')}`;
     }
 
     function updateCoefficientsTable(coefficients) {
@@ -1534,7 +1855,7 @@
           if (c.vif < 5) {
             vifDisplay = `<span class="badge-tag badge-green">${c.vif.toFixed(2)} (Safe)</span>`;
           } else {
-            vifDisplay = `<span class="badge-tag badge-amber">${c.vif.toFixed(2)} (Collinear)</span>`;
+            vifDisplay = `<span class="badge-tag badge-amber">${c.vif.toFixed(2)} (High)</span>`;
           }
         }
 
@@ -1554,21 +1875,27 @@
     function updateOutliersTable(outliers) {
       const tbody = document.getElementById('outliersTableBody');
       tbody.innerHTML = '';
+      const isBoston = currentDatasetKey === 'boston';
 
       outliers.forEach(o => {
         const tr = document.createElement('tr');
-        const isHigh = o.abs_error > 10000;
+        const isHigh = isBoston ? o.abs_error > 8.0 : o.abs_error > 10000;
         const statusBadge = isHigh 
           ? `<span class="badge-tag badge-amber"><span class="dot-status dot-amber"></span> High Residual</span>`
           : `<span class="badge-tag badge-green"><span class="dot-status dot-emerald"></span> In Range</span>`;
 
+        const actDisplay = isBoston ? `$${o.actual.toFixed(2)}k` : `$${o.actual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const predDisplay = isBoston ? `$${o.predicted.toFixed(2)}k` : `$${o.predicted.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const resDisplay = isBoston ? `${o.residual >= 0 ? '+' : ''}$${o.residual.toFixed(2)}k` : `${o.residual >= 0 ? '+' : ''}$${o.residual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        const absDisplay = isBoston ? `$${o.abs_error.toFixed(2)}k` : `$${o.abs_error.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+
         tr.innerHTML = `
           <td style="font-weight: 700; color: #38bdf8;">#${o.rank}</td>
-          <td>Startup #${o.index}</td>
-          <td style="font-family: 'JetBrains Mono', monospace;">$${o.actual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td style="font-family: 'JetBrains Mono', monospace;">$${o.predicted.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td style="color: ${o.residual >= 0 ? '#34d399' : '#f87171'}; font-weight: 600; font-family: 'JetBrains Mono', monospace;">${o.residual >= 0 ? '+' : ''}$${o.residual.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
-          <td style="font-family: 'JetBrains Mono', monospace;">$${o.abs_error.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</td>
+          <td>Sample #${o.index}</td>
+          <td style="font-family: 'JetBrains Mono', monospace;">${actDisplay}</td>
+          <td style="font-family: 'JetBrains Mono', monospace;">${predDisplay}</td>
+          <td style="color: ${o.residual >= 0 ? '#34d399' : '#f87171'}; font-weight: 600; font-family: 'JetBrains Mono', monospace;">${resDisplay}</td>
+          <td style="font-family: 'JetBrains Mono', monospace;">${absDisplay}</td>
           <td style="font-family: 'JetBrains Mono', monospace;">${o.pct_error.toFixed(2)}%</td>
           <td>${statusBadge}</td>
         `;
@@ -1580,40 +1907,83 @@
       const data = getActiveModelData();
       if (!data) return;
 
-      const rd = parseFloat(document.getElementById('numRD').value) || 0;
-      const mkt = parseFloat(document.getElementById('numMkt').value) || 0;
-      const admin = parseFloat(document.getElementById('numAdmin').value) || 0;
-      const state = document.getElementById('selectState').value;
+      if (currentDatasetKey === 'startups') {
+        const rd = parseFloat(document.getElementById('numRD')?.value) || 0;
+        const mkt = parseFloat(document.getElementById('numMkt')?.value) || 0;
+        const admin = parseFloat(document.getElementById('numAdmin')?.value) || 0;
+        const state = document.getElementById('selectState')?.value || 'California';
 
-      let pred = 0;
-      let usedFeatures = [];
+        let pred = 0;
+        let usedFeatures = [];
 
-      data.coefficients.forEach(c => {
-        if (c.feature.includes('Intercept')) {
-          pred += c.coef;
-        } else if (c.feature === 'R&D Spend') {
-          pred += c.coef * rd;
-          usedFeatures.push(`R&D: +$${(c.coef * rd).toFixed(0)}`);
-        } else if (c.feature === 'Marketing Spend') {
-          pred += c.coef * mkt;
-          usedFeatures.push(`Marketing: +$${(c.coef * mkt).toFixed(0)}`);
-        } else if (c.feature === 'Administration') {
-          pred += c.coef * admin;
-          usedFeatures.push(`Admin: ${(c.coef * admin >= 0 ? '+' : '')}$${(c.coef * admin).toFixed(0)}`);
-        } else if (c.feature === 'State_Florida' && state === 'Florida') {
-          pred += c.coef * 1;
-          usedFeatures.push(`Florida dummy: ${(c.coef >= 0 ? '+' : '')}$${c.coef.toFixed(0)}`);
-        } else if (c.feature === 'State_New York' && state === 'New York') {
-          pred += c.coef * 1;
-          usedFeatures.push(`NY dummy: ${(c.coef >= 0 ? '+' : '')}$${c.coef.toFixed(0)}`);
-        }
-      });
+        data.coefficients.forEach(c => {
+          if (c.feature.includes('Intercept')) {
+            pred += c.coef;
+          } else if (c.feature === 'R&D Spend') {
+            pred += c.coef * rd;
+            usedFeatures.push(`R&D: +$${(c.coef * rd).toFixed(0)}`);
+          } else if (c.feature === 'Marketing Spend') {
+            pred += c.coef * mkt;
+            usedFeatures.push(`Marketing: +$${(c.coef * mkt).toFixed(0)}`);
+          } else if (c.feature === 'Administration') {
+            pred += c.coef * admin;
+            usedFeatures.push(`Admin: ${(c.coef * admin >= 0 ? '+' : '')}$${(c.coef * admin).toFixed(0)}`);
+          } else if (c.feature === 'State_Florida' && state === 'Florida') {
+            pred += c.coef * 1;
+            usedFeatures.push(`FL dummy: ${(c.coef >= 0 ? '+' : '')}$${c.coef.toFixed(0)}`);
+          } else if (c.feature === 'State_New York' && state === 'New York') {
+            pred += c.coef * 1;
+            usedFeatures.push(`NY dummy: ${(c.coef >= 0 ? '+' : '')}$${c.coef.toFixed(0)}`);
+          }
+        });
 
-      document.getElementById('predProfitOutput').textContent = '$' + pred.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      document.getElementById('predFormulaNote').innerHTML = `Active predictors: ${data.features.join(', ')}<br><span style="font-size: 11px; color: #94a3b8;">(${usedFeatures.join(' | ')})</span>`;
+        document.getElementById('predProfitOutput').textContent = '$' + pred.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById('predFormulaNote').innerHTML = `Active predictors: ${data.features.join(', ')}<br><span style="font-size: 11px; color: #94a3b8;">(${usedFeatures.join(' | ')})</span>`;
+
+      } else {
+        // Boston Housing Live Calculation
+        const rm = parseFloat(document.getElementById('numRM')?.value) || 6.5;
+        const lstat = parseFloat(document.getElementById('numLSTAT')?.value) || 8.5;
+        const ptratio = parseFloat(document.getElementById('numPTRATIO')?.value) || 16.0;
+        const dis = parseFloat(document.getElementById('numDIS')?.value) || 4.0;
+
+        let pred = 0;
+        let usedFeatures = [];
+
+        data.coefficients.forEach(c => {
+          const fUpper = c.feature.toUpperCase();
+          if (fUpper.includes('INTERCEPT')) {
+            pred += c.coef;
+          } else if (fUpper === 'RM') {
+            pred += c.coef * rm;
+            usedFeatures.push(`RM: ${(c.coef * rm >= 0 ? '+' : '')}$${(c.coef * rm).toFixed(2)}k`);
+          } else if (fUpper === 'LSTAT') {
+            pred += c.coef * lstat;
+            usedFeatures.push(`LSTAT: ${(c.coef * lstat >= 0 ? '+' : '')}$${(c.coef * lstat).toFixed(2)}k`);
+          } else if (fUpper === 'PTRATIO') {
+            pred += c.coef * ptratio;
+            usedFeatures.push(`PTRATIO: ${(c.coef * ptratio >= 0 ? '+' : '')}$${(c.coef * ptratio).toFixed(2)}k`);
+          } else if (fUpper === 'DIS') {
+            pred += c.coef * dis;
+            usedFeatures.push(`DIS: ${(c.coef * dis >= 0 ? '+' : '')}$${(c.coef * dis).toFixed(2)}k`);
+          } else if (fUpper === 'NOX') {
+            pred += c.coef * 0.538;
+            usedFeatures.push(`NOX: ${(c.coef * 0.538 >= 0 ? '+' : '')}$${(c.coef * 0.538).toFixed(2)}k`);
+          } else if (fUpper === 'B') {
+            pred += c.coef * 390.0;
+            usedFeatures.push(`B: ${(c.coef * 390.0 >= 0 ? '+' : '')}$${(c.coef * 390.0).toFixed(2)}k`);
+          }
+        });
+
+        // Clamp non-negative
+        pred = Math.max(1.0, pred);
+        const usdTotal = Math.round(pred * 1000);
+        document.getElementById('predProfitOutput').textContent = `$${pred.toFixed(2)}k ($${usdTotal.toLocaleString()})`;
+        document.getElementById('predFormulaNote').innerHTML = `Active predictors: ${data.features.join(', ')}<br><span style="font-size: 11px; color: #94a3b8;">(${usedFeatures.join(' | ')})</span>`;
+      }
     }
 
-    // Chart.js Setup with Sleek Dark Aesthetics
+    // Chart.js Setup with Dark Aesthetics
     function initCharts() {
       const ctxRMSE = document.getElementById('rmseChart').getContext('2d');
       const ctxR2 = document.getElementById('r2Chart').getContext('2d');
@@ -1639,7 +2009,8 @@
               afterLabel: function(context) {
                 const k = context.dataIndex + 1;
                 const algo = currentAlgo === 'ALL' ? context.dataset.label : currentAlgo;
-                const modelItem = window.MODEL_DATA[algo][k - 1];
+                const ds = window.DATASETS[currentDatasetKey];
+                const modelItem = ds.models[algo][k - 1];
                 return '特徵: ' + modelItem.features.join(', ');
               }
             }
@@ -1679,7 +2050,7 @@
       rmseChartInstance = new Chart(ctxRMSE, {
         type: 'line',
         data: {
-          labels: ['k = 1', 'k = 2 (Sweet)', 'k = 3', 'k = 4', 'k = 5 (Cliff)'],
+          labels: ['k = 1', 'k = 2', 'k = 3', 'k = 4', 'k = 5'],
           datasets: []
         },
         options: {
@@ -1690,7 +2061,7 @@
               ...darkCommonOptions.scales.y,
               title: {
                 display: true,
-                text: 'Test RMSE ($)',
+                text: 'Test RMSE',
                 color: '#94a3b8',
                 font: { family: 'Plus Jakarta Sans', weight: 600, size: 12 }
               }
@@ -1703,7 +2074,7 @@
       r2ChartInstance = new Chart(ctxR2, {
         type: 'line',
         data: {
-          labels: ['k = 1', 'k = 2 (Sweet)', 'k = 3', 'k = 4', 'k = 5 (Cliff)'],
+          labels: ['k = 1', 'k = 2', 'k = 3', 'k = 4', 'k = 5'],
           datasets: []
         },
         options: {
@@ -1727,15 +2098,37 @@
     function updateCharts() {
       if (!rmseChartInstance || !r2ChartInstance) return;
 
+      const ds = window.DATASETS[currentDatasetKey];
+      if (!ds) return;
+
       const algosToDisplay = currentAlgo === 'ALL' 
         ? ['Lasso', 'Forward SFS', 'RFE', 'ElasticNet', 'Exhaustive']
         : [currentAlgo];
 
+      // Update labels with dataset-specific Sweet Spot and Cliff indicators
+      const labels = ['k = 1', 'k = 2', 'k = 3', 'k = 4', 'k = 5'].map((l, idx) => {
+        const k = idx + 1;
+        if (k === ds.sweetK) return `k = ${k} (Sweet ★)`;
+        if (k === ds.cliffK) return `k = ${k} (Cliff ⚠️)`;
+        return `k = ${k}`;
+      });
+
+      rmseChartInstance.data.labels = labels;
+      r2ChartInstance.data.labels = labels;
+
       // Update RMSE Datasets
       rmseChartInstance.data.datasets = algosToDisplay.map(algo => {
-        const series = window.MODEL_DATA[algo];
+        const series = ds.models[algo];
         const dataPoints = series.map(item => item.rmse);
         const color = ALGO_COLORS[algo] || '#06b6d4';
+
+        const pointRadii = [5, 5, 5, 5, 5];
+        pointRadii[ds.sweetK - 1] = 9;
+        pointRadii[ds.cliffK - 1] = 7;
+
+        const pointColors = ['#06b6d4', '#06b6d4', '#06b6d4', '#06b6d4', '#06b6d4'];
+        pointColors[ds.sweetK - 1] = '#10b981';
+        pointColors[ds.cliffK - 1] = '#f59e0b';
 
         return {
           label: algo,
@@ -1745,8 +2138,8 @@
           borderWidth: currentAlgo === 'ALL' ? 2 : 3,
           tension: 0.35,
           fill: currentAlgo !== 'ALL',
-          pointRadius: currentAlgo === 'ALL' ? 4 : [5, 9, 5, 5, 7],
-          pointBackgroundColor: currentAlgo === 'ALL' ? color : ['#06b6d4', '#10b981', '#06b6d4', '#06b6d4', '#f59e0b'],
+          pointRadius: currentAlgo === 'ALL' ? 4 : pointRadii,
+          pointBackgroundColor: currentAlgo === 'ALL' ? color : pointColors,
           pointBorderColor: '#07090e',
           pointBorderWidth: 2,
           pointHoverRadius: 8
@@ -1755,9 +2148,17 @@
 
       // Update R2 Datasets
       r2ChartInstance.data.datasets = algosToDisplay.map(algo => {
-        const series = window.MODEL_DATA[algo];
+        const series = ds.models[algo];
         const dataPoints = series.map(item => item.r2);
         const color = ALGO_COLORS[algo] || '#10b981';
+
+        const pointRadii = [5, 5, 5, 5, 5];
+        pointRadii[ds.sweetK - 1] = 9;
+        pointRadii[ds.cliffK - 1] = 7;
+
+        const pointColors = ['#10b981', '#10b981', '#10b981', '#10b981', '#10b981'];
+        pointColors[ds.sweetK - 1] = '#34d399';
+        pointColors[ds.cliffK - 1] = '#f59e0b';
 
         return {
           label: algo,
@@ -1767,8 +2168,8 @@
           borderWidth: currentAlgo === 'ALL' ? 2 : 3,
           tension: 0.35,
           fill: currentAlgo !== 'ALL',
-          pointRadius: currentAlgo === 'ALL' ? 4 : [5, 9, 5, 5, 7],
-          pointBackgroundColor: currentAlgo === 'ALL' ? color : ['#10b981', '#34d399', '#10b981', '#10b981', '#f59e0b'],
+          pointRadius: currentAlgo === 'ALL' ? 4 : pointRadii,
+          pointBackgroundColor: currentAlgo === 'ALL' ? color : pointColors,
           pointBorderColor: '#07090e',
           pointBorderWidth: 2,
           pointHoverRadius: 8
