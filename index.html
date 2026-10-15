@@ -20,7 +20,7 @@
   <script src="model_data.js"></script>
 
   <style>
-    :root {
+    :root, html.dark {
       --bg-base: #07090e;
       --bg-surface: #0e131f;
       --bg-card: rgba(17, 24, 39, 0.72);
@@ -49,6 +49,393 @@
       
       --shadow-glass: 0 16px 36px -8px rgba(0, 0, 0, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.1);
       --shadow-neon: 0 0 25px var(--neon-cyan-glow);
+    }
+
+    html.light {
+      --bg-base: #f1f5f9;
+      --bg-surface: #ffffff;
+      --bg-card: rgba(255, 255, 255, 0.95);
+      --bg-card-hover: #ffffff;
+      --border-subtle: rgba(15, 23, 42, 0.09);
+      --border-hover: rgba(14, 165, 233, 0.5);
+      
+      --neon-cyan: #0284c7;
+      --neon-cyan-glow: rgba(2, 132, 199, 0.2);
+      --neon-emerald: #059669;
+      --neon-emerald-glow: rgba(5, 150, 105, 0.2);
+      --neon-violet: #7c3aed;
+      --neon-violet-glow: rgba(124, 58, 237, 0.2);
+      --neon-amber: #d97706;
+      --neon-amber-glow: rgba(217, 119, 6, 0.2);
+      --neon-rose: #e11d48;
+      
+      --text-main: #0f172a;
+      --text-muted: #334155;
+      --text-dim: #64748b;
+      
+      --shadow-glass: 0 10px 25px -5px rgba(0, 0, 0, 0.05), 0 8px 10px -6px rgba(0, 0, 0, 0.03), inset 0 1px 0 rgba(255, 255, 255, 1);
+      --shadow-neon: 0 0 20px var(--neon-cyan-glow);
+    }
+
+    /* Light Mode Component Overrides */
+    html.light body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      background-image: 
+        radial-gradient(circle at 10% 15%, rgba(124, 58, 237, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 20%, rgba(2, 132, 199, 0.06) 0%, transparent 45%),
+        radial-gradient(circle at 50% 80%, rgba(5, 150, 105, 0.04) 0%, transparent 50%),
+        linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px);
+    }
+
+    html.light .nav-inner {
+      background: rgba(255, 255, 255, 0.94);
+      border-color: rgba(15, 23, 42, 0.08);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.07);
+    }
+
+    html.light .brand-text h1 {
+      background: linear-gradient(90deg, #0f172a, #334155);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    html.light .problem-switcher-wrap {
+      background: #e2e8f0;
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    html.light .switcher-btn {
+      color: #475569;
+    }
+
+    html.light .switcher-btn:hover {
+      color: #0f172a;
+    }
+
+    html.light .switcher-btn.active {
+      background: linear-gradient(135deg, #0284c7, #0369a1);
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.35);
+    }
+
+    html.light .switcher-btn.active.boston-active {
+      background: linear-gradient(135deg, #059669, #047857);
+      color: #ffffff;
+      box-shadow: 0 2px 10px rgba(5, 150, 105, 0.35);
+    }
+
+    html.light .nav-item {
+      color: #475569;
+    }
+
+    html.light .nav-item:hover {
+      color: var(--neon-cyan);
+    }
+
+    html.light .hero-cockpit {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-color: rgba(15, 23, 42, 0.08);
+      box-shadow: 0 12px 30px -5px rgba(0, 0, 0, 0.06);
+    }
+
+    html.light .hero-cockpit h2 {
+      background: linear-gradient(135deg, #0f172a 30%, #334155 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    html.light .hero-cockpit p {
+      color: #334155;
+    }
+
+    html.light .hero-stat-box {
+      background: #ffffff;
+      border-color: rgba(15, 23, 42, 0.08);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+    }
+
+    html.light .hero-stat-box:hover {
+      background: #ffffff;
+      border-color: var(--neon-cyan);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+    }
+
+    html.light .stat-box-text .val {
+      color: #0f172a;
+    }
+
+    html.light .control-dock {
+      background: #ffffff;
+      border-color: rgba(15, 23, 42, 0.08);
+      box-shadow: 0 8px 24px -4px rgba(0,0,0,0.05);
+    }
+
+    html.light .tab-btn {
+      background: #f1f5f9;
+      border-color: rgba(15, 23, 42, 0.08);
+      color: #334155;
+    }
+
+    html.light .tab-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    html.light .tab-btn.active {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.15), rgba(124, 58, 237, 0.15));
+      border-color: var(--neon-cyan);
+      color: #0f172a;
+      box-shadow: 0 2px 12px rgba(2, 132, 199, 0.2);
+    }
+
+    html.light .tab-btn.active .badge-pill {
+      background: rgba(2, 132, 199, 0.15);
+      color: #0369a1;
+    }
+
+    html.light .k-btn {
+      background: #f1f5f9;
+      border-color: rgba(15, 23, 42, 0.08);
+      color: #334155;
+    }
+
+    html.light .k-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    html.light .k-btn.active {
+      background: var(--neon-cyan);
+      color: #ffffff;
+    }
+
+    html.light .k-btn.sweet-spot {
+      background: rgba(5, 150, 105, 0.08);
+      border-color: rgba(5, 150, 105, 0.3);
+      color: #059669;
+    }
+
+    html.light .k-btn.sweet-spot.active {
+      background: #059669;
+      color: #ffffff;
+    }
+
+    html.light .k-btn.overfitting {
+      background: rgba(217, 119, 6, 0.08);
+      border-color: rgba(217, 119, 6, 0.3);
+      color: #d97706;
+    }
+
+    html.light .k-btn.overfitting.active {
+      background: #d97706;
+      color: #ffffff;
+    }
+
+    html.light .kpi-card {
+      background: #ffffff;
+      border-color: rgba(15, 23, 42, 0.08);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.04);
+    }
+
+    html.light .kpi-value {
+      color: #0f172a;
+    }
+
+    html.light .active-predictors-bar {
+      background: #ffffff;
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    html.light .feature-chip {
+      background: rgba(2, 132, 199, 0.08);
+      border-color: rgba(2, 132, 199, 0.25);
+      color: #0284c7;
+    }
+
+    html.light .glass-card {
+      background: #ffffff;
+      border-color: rgba(15, 23, 42, 0.08);
+      box-shadow: 0 8px 24px -4px rgba(0,0,0,0.05);
+    }
+
+    html.light .card-title-bar h3 {
+      color: #0f172a;
+    }
+
+    html.light .terminal-eq-card {
+      background: #f8fafc;
+      border-color: rgba(2, 132, 199, 0.3);
+      box-shadow: 0 4px 16px rgba(2, 132, 199, 0.06);
+    }
+
+    html.light .terminal-header {
+      border-bottom-color: rgba(15, 23, 42, 0.08);
+    }
+
+    html.light .equation-content {
+      color: #1e293b;
+    }
+
+    html.light .dark-table th {
+      background: #f1f5f9;
+      color: #475569;
+      border-bottom-color: rgba(15, 23, 42, 0.08);
+    }
+
+    html.light .dark-table td {
+      color: #1e293b;
+      border-bottom-color: rgba(15, 23, 42, 0.05);
+    }
+
+    html.light .dark-table tbody tr:hover {
+      background: rgba(2, 132, 199, 0.04);
+    }
+
+    html.light .sim-slider-group {
+      background: #f8fafc;
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    html.light .sim-label-row span {
+      color: #1e293b;
+    }
+
+    html.light .cyber-slider {
+      background: #e2e8f0;
+    }
+
+    html.light .sim-number-input, html.light .sim-select {
+      background: #ffffff;
+      border-color: rgba(15, 23, 42, 0.15);
+      color: #0f172a;
+    }
+
+    html.light .profit-output-card {
+      background: linear-gradient(135deg, rgba(2, 132, 199, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+      border-color: rgba(2, 132, 199, 0.35);
+      box-shadow: 0 8px 20px rgba(2, 132, 199, 0.08);
+    }
+
+    html.light .profit-output-label {
+      color: #0369a1;
+    }
+
+    html.light .profit-output-amount {
+      color: #0284c7;
+      text-shadow: none;
+    }
+
+    html.light .profit-output-note {
+      color: #475569;
+    }
+
+    html.light .conclusions-tab-btn {
+      background: #f1f5f9;
+      border-color: rgba(15, 23, 42, 0.08);
+      color: #475569;
+    }
+
+    html.light .conclusions-tab-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    html.light .conclusions-tab-btn.active {
+      background: #ffffff;
+      border-color: var(--neon-cyan);
+      color: #0f172a;
+      box-shadow: 0 2px 10px rgba(2, 132, 199, 0.15);
+    }
+
+    html.light .conclusions-panel {
+      background: #ffffff;
+      border-color: rgba(15, 23, 42, 0.08);
+    }
+
+    html.light .conclusions-panel h3, html.light .conclusions-panel h4 {
+      color: #0f172a;
+    }
+
+    html.light .conclusions-panel p, html.light .conclusions-panel li {
+      color: #334155;
+    }
+
+    html.light .conclusions-panel blockquote {
+      background: #f1f5f9;
+      border-left-color: var(--neon-cyan);
+      color: #1e293b;
+    }
+
+    html.light .conclusions-panel table th {
+      background: #f1f5f9;
+      color: #334155;
+    }
+
+    html.light .conclusions-panel table td {
+      color: #1e293b;
+      border-color: rgba(15, 23, 42, 0.06);
+    }
+
+    html.light .conclusions-panel code {
+      background: #f1f5f9;
+      color: #0369a1;
+    }
+
+    html.light .ref-btn {
+      background: #f1f5f9;
+      border-color: rgba(15, 23, 42, 0.1);
+      color: #334155;
+    }
+
+    html.light .ref-btn:hover {
+      background: #e2e8f0;
+      color: #0f172a;
+    }
+
+    html.light footer {
+      border-top-color: rgba(15, 23, 42, 0.08);
+    }
+
+    /* Theme Switcher Button Style */
+    .theme-toggle-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 15px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 9999px;
+      color: var(--text-main);
+      font-size: 12.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      outline: none;
+      user-select: none;
+    }
+
+    html.light .theme-toggle-btn {
+      background: #f1f5f9;
+      border-color: rgba(15, 23, 42, 0.12);
+      color: #0f172a;
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--neon-cyan);
+      background: rgba(6, 182, 212, 0.15);
+      box-shadow: 0 0 12px var(--neon-cyan-glow);
+      transform: translateY(-1px);
+    }
+
+    .theme-toggle-btn i {
+      font-size: 14px;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle-btn:hover i {
+      transform: rotate(20deg) scale(1.15);
     }
 
     * {
@@ -978,6 +1365,13 @@
         <a href="#stats-model" class="nav-item"><i class="fa-solid fa-table"></i> 統計報表</a>
         <a href="#profit-cockpit" class="nav-item"><i class="fa-solid fa-sliders"></i> 即時預測</a>
         <a href="#project-conclusions-section" class="nav-item"><i class="fa-solid fa-graduation-cap"></i> 專案結論</a>
+        
+        <!-- Light / Dark Theme Switcher Button -->
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="切換深色 / 淺色主題" aria-label="切換深色 / 淺色主題">
+          <i class="fa-solid fa-moon" id="themeIcon"></i>
+          <span id="themeText">深色</span>
+        </button>
+
         <div class="live-indicator">
           <span class="live-dot"></span>
           CRISP-DM VERIFIED
@@ -1432,7 +1826,80 @@
     };
 
     // Initialize application
+    
+    // ==========================================
+    // THEME SWITCHER LOGIC (Dark / Light Mode)
+    // ==========================================
+    let currentTheme = localStorage.getItem('aiot_theme') || 'dark';
+
+    function initTheme() {
+      applyTheme(currentTheme);
+
+      const toggleBtn = document.getElementById('themeToggleBtn');
+      if (toggleBtn) {
+        toggleBtn.addEventListener('click', () => {
+          currentTheme = currentTheme === 'dark' ? 'light' : 'dark';
+          localStorage.setItem('aiot_theme', currentTheme);
+          applyTheme(currentTheme);
+        });
+      }
+    }
+
+    function applyTheme(theme) {
+      const htmlEl = document.documentElement;
+      const themeIcon = document.getElementById('themeIcon');
+      const themeText = document.getElementById('themeText');
+
+      if (theme === 'light') {
+        htmlEl.classList.remove('dark');
+        htmlEl.classList.add('light');
+        if (themeIcon) {
+          themeIcon.className = 'fa-solid fa-sun';
+          themeIcon.style.color = '#d97706';
+        }
+        if (themeText) themeText.textContent = '淺色';
+      } else {
+        htmlEl.classList.remove('light');
+        htmlEl.classList.add('dark');
+        if (themeIcon) {
+          themeIcon.className = 'fa-solid fa-moon';
+          themeIcon.style.color = '#38bdf8';
+        }
+        if (themeText) themeText.textContent = '深色';
+      }
+
+      applyThemeToCharts(theme);
+    }
+
+    function applyThemeToCharts(theme) {
+      if (!rmseChartInstance || !r2ChartInstance) return;
+
+      const isLight = theme === 'light';
+      const gridColor = isLight ? 'rgba(0, 0, 0, 0.06)' : 'rgba(255, 255, 255, 0.06)';
+      const textColor = isLight ? '#475569' : '#94a3b8';
+      const tooltipBg = isLight ? 'rgba(255, 255, 255, 0.96)' : 'rgba(15, 23, 42, 0.95)';
+      const tooltipTitle = isLight ? '#0f172a' : '#38bdf8';
+      const tooltipBody = isLight ? '#334155' : '#f8fafc';
+      const tooltipBorder = isLight ? 'rgba(0, 0, 0, 0.1)' : 'rgba(56, 189, 248, 0.3)';
+
+      [rmseChartInstance, r2ChartInstance].forEach(chart => {
+        chart.options.scales.x.grid.color = gridColor;
+        chart.options.scales.x.ticks.color = textColor;
+        chart.options.scales.y.grid.color = gridColor;
+        chart.options.scales.y.ticks.color = textColor;
+        chart.options.scales.y.title.color = textColor;
+
+        chart.options.plugins.tooltip.backgroundColor = tooltipBg;
+        chart.options.plugins.tooltip.titleColor = tooltipTitle;
+        chart.options.plugins.tooltip.bodyColor = tooltipBody;
+        chart.options.plugins.tooltip.borderColor = tooltipBorder;
+
+        chart.update();
+      });
+    }
+
     document.addEventListener('DOMContentLoaded', () => {
+      initTheme();
       initCharts();
       setupEventListeners();
       switchDataset('startups');
